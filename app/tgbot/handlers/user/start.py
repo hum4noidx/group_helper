@@ -1,12 +1,13 @@
 import datetime
 
 from aiogram import Router
-from aiogram.filters import Command, CommandObject
+from aiogram.filters import Command, CommandObject, StateFilter
 from aiogram.types import Message
 from aiogram_dialog import DialogManager, StartMode
 
 from configreader import config
 from infrastructure.database.repositories.user import UserRepo
+from tgbot.handlers.group.important_notes import add_msg_to_important_thread
 from tgbot.states.main_menu import MainMenu
 from tgbot.utils.system_config import getsysteminfo, get_process_uptime
 
@@ -43,8 +44,14 @@ async def get_id(m: Message):
     await m.reply(f'Ваш ID: <code>{m.from_user.id}</code>\n')
 
 
+async def get_message(event: Message):
+    print(event)
+
+
 def register_user_router(router: Router):
-    router.message.register(start, Command(commands='start'), state='*')
-    router.message.register(configuration, Command(commands=['config']), state='*')
-    router.message.register(status, Command(commands=['status']), state='*')
-    router.message.register(get_id, Command(commands=['id']), state='*')
+    router.message.register(start, Command(commands='start'), StateFilter('*'))
+    router.message.register(configuration, Command(commands=['config']), StateFilter('*'))
+    router.message.register(status, Command(commands=['status']), StateFilter('*'))
+    router.message.register(get_id, Command(commands=['id']), StateFilter('*'))
+    router.message.register(get_message, Command(commands='test'), StateFilter('*'))
+    router.message.register(add_msg_to_important_thread, Command(commands='i', prefix='!'), StateFilter('*'))

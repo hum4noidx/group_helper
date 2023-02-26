@@ -8,6 +8,7 @@ services:
       - .env
     volumes:
       - logs:/app/logs
+      - "/etc/timezone:/etc/timezone:ro"
 
 volumes:
   logs:

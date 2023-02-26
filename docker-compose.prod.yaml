@@ -1,11 +1,9 @@
 services:
   main:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/hum4noidx/group_helper
     restart: "unless-stopped"
     ports:
-      - "8001:8001"
+      - "4003:4003"
     env_file:
       - .env
     volumes:
@@ -17,4 +15,5 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: app/logs
+      device: /home/hm4nx/logs
+      # temporary fix for docker-compose

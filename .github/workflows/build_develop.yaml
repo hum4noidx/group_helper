@@ -60,7 +60,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: dev
+      name: prod
     steps:
       - name: Deploy to VDS
         uses: appleboy/ssh-action@master

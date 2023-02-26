@@ -7,6 +7,7 @@ from aiogram_dialog import DialogManager, StartMode
 
 from infrastructure.database.repositories.admin import AdminRepo
 from infrastructure.database.repositories.bot import BotRepo
+from tgbot.handlers.admin.group_commands import cmd_ro
 from tgbot.states.admin.menu import AdminMenu
 
 logger = logging.getLogger(__name__)
@@ -75,3 +76,5 @@ def register_admin_router(router: Router):
                             Command(commands=['add_admin'], prefix='/!'))
     router.message.register(ban_user,
                             Command(commands=['ban'], prefix='/!'))
+    router.message.register(cmd_ro,
+                            Command(commands=['ro'], prefix='!'))

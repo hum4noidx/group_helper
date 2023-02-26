@@ -4,11 +4,12 @@ services:
     restart: "unless-stopped"
     ports:
       - "4003:4003"
+    environment:
+      - TZ=Europe/Moscow
     env_file:
       - .env
     volumes:
       - logs:/app/logs
-      - "/etc/timezone:/etc/timezone:ro"
 
 volumes:
   logs:

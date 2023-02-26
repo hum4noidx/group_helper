@@ -7,6 +7,7 @@ from aiogram_dialog import DialogManager, StartMode
 
 from infrastructure.database.repositories.admin import AdminRepo
 from infrastructure.database.repositories.bot import BotRepo
+from tgbot.handlers.admin.group_commands import cmd_ro
 from tgbot.states.admin.menu import AdminMenu
 
 logger = logging.getLogger(__name__)
@@ -68,10 +69,12 @@ async def ban_user(m: Message, command: CommandObject, admin_repo: AdminRepo):
 
 def register_admin_router(router: Router):
     router.message.register(start_maintenance,
-                            Command(commands=['maintenance'], commands_prefix='/!'), state='*')
+                            Command(commands=['maintenance'], prefix='/!'))
     router.message.register(stop_maintenance,
-                            Command(commands=['stop_maintenance'], commands_prefix='/!'), state='*')
+                            Command(commands=['stop_maintenance'], prefix='/!'))
     router.message.register(add_admin,
-                            Command(commands=['add_admin'], commands_prefix='/!'), state='*')
+                            Command(commands=['add_admin'], prefix='/!'))
     router.message.register(ban_user,
-                            Command(commands=['ban'], commands_prefix='/!'), state='*')
+                            Command(commands=['ban'], prefix='/!'))
+    router.message.register(cmd_ro,
+                            Command(commands=['ro'], prefix='!'))

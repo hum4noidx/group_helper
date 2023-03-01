@@ -13,3 +13,4 @@ async def add_msg_to_important_thread(event: Message, bot: Bot):
     else:
         logger.info(f'User {event.from_user.id}|{event.from_user.full_name} added message to important thread')
         await event.forward(chat_id=event.chat.id, message_thread_id=4578)
+    await event.reply('✅ Сообщение добавлено в важную тему')

@@ -52,16 +52,16 @@ async def main():
     register_handlers(dp=dp)
 
     try:
+        # Suppress aiohttp access log completely
+        aiohttp_logger = logging.getLogger("aiohttp.access")
+        aiohttp_logger.setLevel(logging.CRITICAL)
+        aiogram_event = logging.getLogger("aiogram.event")
+        aiogram_event.setLevel(logging.CRITICAL)
 
         if not config.webhook_domain:
-
+            await bot.delete_webhook()
             await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
         else:
-            # Suppress aiohttp access log completely
-            aiohttp_logger = logging.getLogger("aiohttp.access")
-            aiohttp_logger.setLevel(logging.CRITICAL)
-            aiogram_event = logging.getLogger("aiogram.event")
-            aiogram_event.setLevel(logging.CRITICAL)
 
             # Setting webhook
             await bot.set_webhook(

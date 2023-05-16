@@ -86,7 +86,7 @@ jobs:
             echo "$ENV_FILE_CONTENT" > .env
             docker login -u ${{ github.repository_owner }} -p ${{ secrets.TOKEN }} ghcr.io
             eval $COMPOSE_CMD pull
-            eval $COMPOSE_CMD up -d --force-recreate --build main
+            eval $COMPOSE_CMD up -d --force-recreate --build
             docker image prune -f
             rm .env
             rm docker-compose.yaml

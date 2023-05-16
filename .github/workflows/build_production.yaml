@@ -65,7 +65,7 @@ jobs:
       - name: Deploy to VDS
         uses: appleboy/ssh-action@master
         env:
-          COMPOSE_CMD: docker compose -p group_helper_prod
+          COMPOSE_CMD: docker compose -p group_helper
           ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           GITHUB_API_URL: https://api.github.com

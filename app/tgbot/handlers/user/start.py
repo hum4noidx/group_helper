@@ -21,8 +21,8 @@ async def get_id(m: Message):
     await m.reply(f'Ваш ID: <code>{m.from_user.id}</code>\n')
 
 
-async def open_notion(event: Message, bot: Bot):
-    await message.answer(
+async def open_notion(event: Message):
+    await event.answer(
         "Notion's here!",
         reply_markup=InlineKeyboardMarkup(
             inline_keyboard=[

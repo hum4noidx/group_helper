@@ -33,9 +33,6 @@ def register_middlewares(dp: Dispatcher, db_pool):
 def register_dialogs(dp: Dispatcher, dialogs_router: Router):
     dialog_registry = DialogRegistry(dp)
 
-    # ========= Admin dialogs =========
-    admin_router = Router()
-
     # ========= User dialogs =========
     user_router = Router()
     dialog_registry.register(main_menu.main_menu_dialog, router=user_router)
@@ -56,8 +53,8 @@ def register_handlers(dp: Dispatcher):
     register_user_router(user_router)
     dp.include_router(admin_router)
     dp.include_router(trader_router)
-    dp.include_router(user_router)
     dp.include_router(analysis_router)
+    dp.include_router(user_router)
     user_router.include_router(dialogs_router)
     registy: DialogRegistry = register_dialogs(dp, dialogs_router)
     logger.info('Handlers successfully registered')

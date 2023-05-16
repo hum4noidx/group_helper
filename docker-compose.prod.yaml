@@ -1,0 +1,61 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:6.2.5-alpine
+    restart: "unless-stopped"
+    container_name: redis-helper_bot
+    command: >
+      --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6375:6379"
+    volumes:
+      - ./data/redis/:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  db:
+    image: postgres:15-alpine
+    restart: "unless-stopped"
+    container_name: postgres-helper_bot
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGCLIENTENCODING: UTF8
+    volumes:
+      - ./data/pg/data:/var/lib/postgresql/data
+      - ./data/pg/conf:/etc/postgresql
+    ports:
+      - "54388:5432"
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TZ=Europe/Moscow
+    restart: "unless-stopped"
+    container_name: helper_bot
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    networks:
+      - nginx-network
+    volumes:
+      - logs:/app/logs
+networks:
+  nginx-network:
+    external: true
+
+volumes:
+  logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /var/log/group_helper

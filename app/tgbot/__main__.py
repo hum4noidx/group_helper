@@ -21,7 +21,7 @@ async def main():
     if config.environment == 'PRODUCTION':
 
         logging.basicConfig(
-            filename='bot_webhook.log',
+            filename='logs/bot_webhook.log',
             filemode='a',
             level=logging.INFO,
             format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
@@ -32,7 +32,7 @@ async def main():
             format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
         )
 
-    if config.redis_dsn:
+    if config.redis_dsn and config.redis_dsn.startswith('redis://'):
         storage = RedisStorage.from_url(config.redis_dsn,
                                         key_builder=DefaultKeyBuilder(prefix='template_bot', with_destiny=True))
     else:
@@ -49,19 +49,19 @@ async def main():
     # Register middlewares
     register_middlewares(dp, db_pool)
     # Register handlers
-    dialog_registry = register_handlers(dp=dp)
+    register_handlers(dp=dp)
 
     try:
+        # Suppress aiohttp access log completely
+        aiohttp_logger = logging.getLogger("aiohttp.access")
+        aiohttp_logger.setLevel(logging.CRITICAL)
+        aiogram_event = logging.getLogger("aiogram.event")
+        aiogram_event.setLevel(logging.CRITICAL)
 
         if not config.webhook_domain:
-
+            await bot.delete_webhook()
             await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
         else:
-            # Suppress aiohttp access log completely
-            aiohttp_logger = logging.getLogger("aiohttp.access")
-            aiohttp_logger.setLevel(logging.CRITICAL)
-            aiogram_event = logging.getLogger("aiogram.event")
-            aiogram_event.setLevel(logging.CRITICAL)
 
             # Setting webhook
             await bot.set_webhook(

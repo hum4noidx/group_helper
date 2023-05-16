@@ -16,6 +16,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
+    networks:
+        - group_helper
   db:
     image: postgres:15-alpine
     restart: "unless-stopped"
@@ -32,10 +34,10 @@ services:
       - ./data/pg/conf:/etc/postgresql
     ports:
       - "54388:5432"
+    networks:
+        - group_helper
   bot:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/hum4noidx/group_helper:master
     environment:
       - TZ=Europe/Moscow
     restart: "unless-stopped"
@@ -46,12 +48,17 @@ services:
       - .env
     networks:
       - nginx-network
+      - group_helper
     volumes:
       - logs:/app/logs
+
 networks:
   nginx-network:
+    ipam:
+      config:
+        - subnet: 172.24.0.4/16
     external: true
-
+  group_helper:
 volumes:
   logs:
     driver: local

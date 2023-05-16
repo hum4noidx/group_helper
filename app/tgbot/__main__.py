@@ -34,7 +34,8 @@ async def main():
 
     if config.redis_dsn and config.redis_dsn.startswith('redis://'):
         storage = RedisStorage.from_url(config.redis_dsn,
-                                        key_builder=DefaultKeyBuilder(prefix='template_bot', with_destiny=True))
+                                        key_builder=DefaultKeyBuilder(prefix='template_bot',
+                                                                      with_destiny=True))
     else:
         storage = MemoryStorage()
 

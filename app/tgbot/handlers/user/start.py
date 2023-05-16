@@ -37,6 +37,6 @@ async def open_notion(event: Message, bot: Bot):
 
 
 def register_user_router(router: Router):
-    router.message.register(start, Command(commands='start'), state='*')
-    router.message.register(get_id, Command(commands=['id']), state='*')
-    router.message.register(open_notion, Command(commands=['notion']), state='*')
+    router.message.register(start, Command(commands='start'))
+    router.message.register(get_id, Command(commands=['id']))
+    router.message.register(open_notion, Command(commands=['notion']))

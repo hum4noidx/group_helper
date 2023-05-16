@@ -1,4 +1,4 @@
-                                           # Separate build image
+# Separate build image
 FROM python:3.11-slim-bullseye as compile-image
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"

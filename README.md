@@ -18,5 +18,5 @@ To run this project, you will need to add the following environment variables to
 npm i -g serve
 ```
 ```
-serve -g web/index.html
+serve web -p 443 -C
 ```

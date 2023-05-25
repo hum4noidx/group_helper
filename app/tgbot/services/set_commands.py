@@ -14,6 +14,12 @@ async def set_commands(bot: Bot, db_pool: sessionmaker):
         BotCommand(
             command="start",
             description="Start",
+        ), BotCommand(
+            command="analyze",
+            description="Анализ текста",
+        ), BotCommand(
+            command="notion",
+            description="Доступ к страничке группы",
         ),
     ]
 

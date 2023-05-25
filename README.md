@@ -12,3 +12,11 @@ To run this project, you will need to add the following environment variables to
 `BOT_TOKEN`
 
 `POSTGRES_DSN`
+
+## Run webapp
+```
+npm i -g serve
+```
+```
+serve web -p 443 -C
+```

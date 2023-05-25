@@ -1,0 +1,78 @@
+# Python files that get ignored in .gitignore
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+*.py[cod]
+*$py.class
+
+# Test or documentation files
+*.eggs
+*.egg
+*.egg-info
+dist
+build
+docs
+tests
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery
+celerybeat-schedule.*
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# dotenv
+.env
+.env.sample
+
+# virtualenv
+venv/
+ENV/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+
+# Pyre type checker
+.pyre/
+
+# PyCharm files
+.idea/
+
+# VS Code files
+.vscode/
+
+# DS_Store file
+.DS_Store

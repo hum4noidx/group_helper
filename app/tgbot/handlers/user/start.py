@@ -1,12 +1,13 @@
 import datetime
 
-from aiogram import Router, Bot
+from aiogram import Router
 from aiogram.filters import Command, CommandObject
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 from aiogram_dialog import DialogManager, StartMode
 
 from configreader import config
 from infrastructure.database.repositories.user import UserRepo
+from tgbot.handlers.group.important_notes import add_msg_to_important_thread
 from tgbot.states.main_menu import MainMenu
 
 
@@ -40,3 +41,4 @@ def register_user_router(router: Router):
     router.message.register(start, Command(commands='start'))
     router.message.register(get_id, Command(commands=['id']))
     router.message.register(open_notion, Command(commands=['notion']))
+    router.message.register(add_msg_to_important_thread, Command(commands='i', prefix='!'))

@@ -63,7 +63,10 @@ def make_analysis(text):
     characters = len(text)
     alphanumeric_characters = len(re.findall(r'[a-zA-Z0-9]', text))
     max_sentence_length = max(words_per_sentence)
-    words_between_pauses = sum(words_per_sentence) / sum(pauses_per_sentence)
+    try:
+        words_between_pauses = sum(words_per_sentence) / sum(pauses_per_sentence)
+    except ZeroDivisionError:
+        words_between_pauses = 0
     pronouns = count_words(text, ['I', 'you', 'he', 'she', 'it', 'we', 'they'])
     paragraphs = text.count('\n\n') + 1
     words_per_paragraph = [len(paragraph.split()) for paragraph in text.split('\n\n')]

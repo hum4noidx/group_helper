@@ -23,13 +23,13 @@ async def get_id(m: Message):
 
 
 async def open_notion(event: Message):
-    await event.answer(
+    await event.reply(
         "Notion's here!",
         reply_markup=InlineKeyboardMarkup(
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text="Open Webview", web_app=WebAppInfo(url=f"{config.webhook_domain}/notion")
+                        text="Open Notion", web_app=WebAppInfo(url=f"{config.webhook_domain}/notion")
                     )
                 ]
             ]

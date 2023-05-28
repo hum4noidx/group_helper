@@ -1,6 +1,6 @@
 import datetime
 
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import Command, CommandObject
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 from aiogram_dialog import DialogManager, StartMode
@@ -22,7 +22,7 @@ async def get_id(m: Message):
     await m.reply(f'Ваш ID: <code>{m.from_user.id}</code>\n')
 
 
-async def open_notion(event: Message):
+async def open_notion_private(event: Message):
     await event.reply(
         "Notion's here!",
         reply_markup=InlineKeyboardMarkup(
@@ -37,10 +37,15 @@ async def open_notion(event: Message):
     )
 
 
+async def open_notion_group(event: Message):
+    await event.reply("Notion's here! https://t.me/gigachadhe1perbot/notion")
+
+
 def setup() -> Router:
     router = Router()
-    router.message.register(start, Command(commands='start'))
+    router.message.register(start, Command(commands='start'), F.chat.type == 'private')
     router.message.register(get_id, Command(commands=['id']))
-    router.message.register(open_notion, Command(commands=['notion']))
+    router.message.register(open_notion_private, Command(commands=['notion']), F.chat.type == 'private')
+    router.message.register(open_notion_group, Command(commands=['notion']))
     router.message.register(add_msg_to_important_thread, Command(commands='i', prefix='!'))
     return router

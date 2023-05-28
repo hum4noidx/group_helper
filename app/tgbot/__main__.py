@@ -58,6 +58,8 @@ async def main():
         aiohttp_logger.setLevel(logging.CRITICAL)
         aiogram_event = logging.getLogger("aiogram.event")
         aiogram_event.setLevel(logging.CRITICAL)
+        aiohttp_server_logger = logging.getLogger("aiohttp.server")
+        aiohttp_server_logger.setLevel(logging.CRITICAL)
 
         if not config.webhook_domain:
             await bot.delete_webhook()

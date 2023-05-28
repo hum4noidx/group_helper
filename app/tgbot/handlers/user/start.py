@@ -37,8 +37,10 @@ async def open_notion(event: Message):
     )
 
 
-def register_user_router(router: Router):
+def setup() -> Router:
+    router = Router()
     router.message.register(start, Command(commands='start'))
     router.message.register(get_id, Command(commands=['id']))
     router.message.register(open_notion, Command(commands=['notion']))
     router.message.register(add_msg_to_important_thread, Command(commands='i', prefix='!'))
+    return router

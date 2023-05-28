@@ -7,6 +7,7 @@ from aiogram_dialog import DialogManager, StartMode
 
 from infrastructure.database.repositories.admin import AdminRepo
 from infrastructure.database.repositories.bot import BotRepo
+from tgbot.filters.admin import IsAdmin
 from tgbot.handlers.admin.group_commands import cmd_ro
 from tgbot.states.admin.menu import AdminMenu
 
@@ -67,7 +68,9 @@ async def ban_user(m: Message, command: CommandObject, admin_repo: AdminRepo):
         logger.info(f'User {m.from_user.id} tried to ban {user_id}, but he is not found')
 
 
-def register_admin_router(router: Router):
+def setup() -> Router:
+    router = Router()
+    router.message.filter(IsAdmin())
     router.message.register(start_maintenance,
                             Command(commands=['maintenance'], prefix='/!'))
     router.message.register(stop_maintenance,
@@ -78,3 +81,4 @@ def register_admin_router(router: Router):
                             Command(commands=['ban'], prefix='/!'))
     router.message.register(cmd_ro,
                             Command(commands=['ro'], prefix='!'))
+    return router
